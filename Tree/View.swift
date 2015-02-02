@@ -15,9 +15,15 @@ class View: UIView {
     let label: UILabel = UILabel();
     let labelQuote: UITextView = UITextView();
     let imageView: UIImageView;
+    let imageView1: UIImageView;
+    let imageView2: UIImageView;
+    let imageView3: UIImageView;
     
     required init(coder aDecoder: NSCoder) {
         self.imageView = UIImageView();
+        self.imageView1 = UIImageView();
+        self.imageView2 = UIImageView();
+        self.imageView3 = UIImageView();
         super.init(coder: aDecoder);
         
         // Initialization code
@@ -26,22 +32,9 @@ class View: UIView {
         labelQuote.autoresizingMask =
             UIViewAutoresizing.FlexibleLeftMargin
             | UIViewAutoresizing.FlexibleRightMargin
-            | UIViewAutoresizing.FlexibleTopMargin
             | UIViewAutoresizing.FlexibleBottomMargin
             | UIViewAutoresizing.FlexibleWidth;
         
-        
-        
-        /*
-        slider.addTarget(self,
-        action: "valueChanged:",
-        forControlEvents: UIControlEvents.ValueChanged);
-        */
-        
-        //Monospace font to keep the text stable as the numbers change.
-        label.font = UIFont(name: "Chicago", size: 26);
-        label.textAlignment = NSTextAlignment.Center;
-        label.textColor = UIColor.whiteColor();
         
         var title: String = "Fate Knows Where You're Going, But It's Up To You To Get There";
         let titlefont: UIFont? = UIFont(name: "Papyrus", size: 30);
@@ -61,31 +54,94 @@ class View: UIView {
             image = UIImage();	//Make a dummy image because the show must go on.
         }
         
+        var image1: UIImage? = UIImage(named: "number-1-design-th.png");
+        if image == nil {
+            println("number-1-design-th.png");
+            image = UIImage();	//Make a dummy image because the show must go on.
+        }
+        
+        var image2: UIImage? = UIImage(named: "number-2-design-th.png");
+        if image == nil {
+            println("number-2-design-th.png");
+            image = UIImage();	//Make a dummy image because the show must go on.
+        }
+        
+        var image3: UIImage? = UIImage(named: "number-3-design-md.png");
+        if image == nil {
+            println("number-3-design-md.png");
+            image = UIImage();	//Make a dummy image because the show must go on.
+        }
+        
         imageView = UIImageView(image: image!);
         imageView.alpha = 0
         
-        //Fade in the green band.
-        UIImageView.animateWithDuration(15,
-            delay: 1,
+        imageView1 = UIImageView(image: image1!);
+        imageView1.alpha = 0
+        
+        imageView2 = UIImageView(image: image2!);
+        imageView2.alpha = 0
+        
+        imageView3 = UIImageView(image: image3!);
+        imageView3.alpha = 0
+        
+        //Fade in the lightbulb.
+        UIImageView.animateWithDuration(11,
+            delay: 0,
             options: UIViewAnimationOptions.CurveEaseInOut,
             animations: {
                 self.imageView.alpha = 1;
             },
-            completion: nil);
+            
+            completion:{(b: Bool) -> Void in
+                UIImageView.animateWithDuration(1,
+                    delay: 0,
+                    options: UIViewAnimationOptions.CurveEaseInOut,
+                    animations: {
+                        self.imageView1.alpha = 1;
+                    },
+                    completion: {(b: Bool) -> Void in
+                        
+                        
+                        UIImageView.animateWithDuration(1,
+                            delay: 0,
+                            options: UIViewAnimationOptions.CurveEaseInOut,
+                            animations: {
+                                self.imageView2.alpha = 1;
+                            },
+                            completion: {(b: Bool) -> Void in
+                                UIImageView.animateWithDuration(1,
+                                    delay: 0,
+                                    options: UIViewAnimationOptions.CurveEaseInOut,
+                                    animations: {
+                                        self.imageView3.alpha = 1;
+                                    },
+                                    completion: nil
+                                )
+                            }
+                            
+                            
+                        )
+                    }
+                )
+            }
+        )
         
         
-        backgroundColor = UIColor.blackColor();
+        
+        
         
         
         let recognizer: UIRotationGestureRecognizer =
         UIRotationGestureRecognizer(target: self, action: "rotate:");
         
         addGestureRecognizer(recognizer);
+        
         addSubview(imageView);
-        //addSubview(slider);
-        //addSubview(label);
+        addSubview(imageView1);
+        addSubview(imageView2);
+        addSubview(imageView3);
         addSubview(labelQuote);
-        //valueChanged(slider);	//write initial temperatures into the label
+        
     }
     
     //Center the label below the slider, separated by a margin.
@@ -97,12 +153,18 @@ class View: UIView {
         let m: CGFloat = min(bounds.size.width, bounds.size.height);
         let margin: CGFloat = m / 30;
         
-        //label.frame = CGRectMake(
-          //  );
+        label.frame = CGRectMake(
+            frame.origin.x,
+            frame.origin.y + frame.size.height + margin,
+            frame.size.width,
+            frame.size.height);
         
-        //labelQuote.frame = CGRectMake(
-        //);
-    
+        labelQuote.frame = CGRectMake(
+            imageView.frame.origin.x,
+            imageView.frame.origin.y + imageView.frame.size.height + margin + imageView.frame.size.height,
+            imageView.frame.size.width,
+            imageView.frame.size.height + imageView.frame.size.height + imageView.frame.size.height + imageView.frame.size.height);
+        
     }
     
     func valueChanged(slider: UISlider!) {
@@ -116,7 +178,7 @@ class View: UIView {
         imageView.alpha = red;
         
         //Each number is at least 5 characters wide, with one digit to right of decimal point.
-        label.text = String(format: "\(slider.value)");
+        label.text = String(format: "Hello");
     }
     
     func rotate(recognizer: UIRotationGestureRecognizer) {
