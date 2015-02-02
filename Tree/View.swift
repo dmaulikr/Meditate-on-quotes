@@ -93,33 +93,56 @@ class View: UIView {
             },
             
             completion:{(b: Bool) -> Void in
-                UIImageView.animateWithDuration(1,
+                UIImageView.animateWithDuration(0.5,
                     delay: 0,
                     options: UIViewAnimationOptions.CurveEaseInOut,
                     animations: {
                         self.imageView1.alpha = 1;
                     },
                     completion: {(b: Bool) -> Void in
-                        
-                        
-                        UIImageView.animateWithDuration(1,
+                        UIImageView.animateWithDuration(0.5,
                             delay: 0,
                             options: UIViewAnimationOptions.CurveEaseInOut,
                             animations: {
-                                self.imageView2.alpha = 1;
+                                self.imageView1.alpha = 0;
                             },
                             completion: {(b: Bool) -> Void in
                                 UIImageView.animateWithDuration(1,
                                     delay: 0,
                                     options: UIViewAnimationOptions.CurveEaseInOut,
                                     animations: {
-                                        self.imageView3.alpha = 1;
+                                        self.imageView2.alpha = 1;
                                     },
-                                    completion: nil
+                                    completion: {(b: Bool) -> Void in
+                                        UIImageView.animateWithDuration(0.5,
+                                            delay: 0,
+                                            options: UIViewAnimationOptions.CurveEaseInOut,
+                                            animations: {
+                                                self.imageView2.alpha = 0;
+                                            },
+                                            completion: {(b: Bool) -> Void in
+                                                UIImageView.animateWithDuration(0.5,
+                                                    delay: 0,
+                                                    options: UIViewAnimationOptions.CurveEaseInOut,
+                                                    animations: {
+                                                        self.imageView3.alpha = 1;
+                                                    },
+                                                    completion: {(b: Bool) -> Void in
+                                                        UIImageView.animateWithDuration(0.5,
+                                                            delay: 0,
+                                                            options: UIViewAnimationOptions.CurveEaseInOut,
+                                                            animations: {
+                                                                self.imageView3.alpha = 0;
+                                                            },
+                                                            completion: nil
+                                                        )
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    }
                                 )
                             }
-                            
-                            
                         )
                     }
                 )
@@ -152,7 +175,7 @@ class View: UIView {
     override func layoutSubviews() {
         let m: CGFloat = min(bounds.size.width, bounds.size.height);
         let margin: CGFloat = m / 30;
-        
+        println("\(margin)")
         label.frame = CGRectMake(
             frame.origin.x,
             frame.origin.y + frame.size.height + margin,
@@ -161,11 +184,13 @@ class View: UIView {
         
         labelQuote.frame = CGRectMake(
             imageView.frame.origin.x,
-            imageView.frame.origin.y + imageView.frame.size.height + margin + imageView.frame.size.height,
+            imageView.frame.origin.y + imageView.frame.size.height + margin,
             imageView.frame.size.width,
-            imageView.frame.size.height + imageView.frame.size.height + imageView.frame.size.height + imageView.frame.size.height);
+            imageView.frame.size.height);
+        println("\(imageView.frame.size.height)")
         
     }
+    
     
     func valueChanged(slider: UISlider!) {
         //As the slider goes from the minimum to the maximum value,
