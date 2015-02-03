@@ -33,6 +33,16 @@ class TableViewController: UITableViewController {
 		super.init(nibName: nil, bundle: nil);
 	}
 
+
+    
+
+    
+    
+    
+    
+    
+    
+    
 	override func viewDidLoad() {
 		super.viewDidLoad();
 		tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier);
@@ -76,49 +86,33 @@ class TableViewController: UITableViewController {
 		return cell;
 	}
 	
-	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let cell: UITableViewCell? = tableView.cellForRowAtIndexPath(indexPath);
-		if cell == nil {
-			return;
-		}
-		//ip is the indexPath of the subtree whose name is displayed in this cell.
-		let ip: NSIndexPath = controllerIndexPath.indexPathByAddingIndex(indexPath.row);
-		if model.count(ip) > 0 {
-			let tableViewController: TableViewController =
-				TableViewController(model: model, indexPath: ip);
-			navigationController!.pushViewController(tableViewController, animated: true);
-		} else {
-			//ip refers to a tree that is a leaf.  Display its Wikipedia article.
-			let name: NSString = model.name(ip);
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell: UITableViewCell? = tableView.cellForRowAtIndexPath(indexPath);
+        if cell == nil {
+            return;
+        }
+        //ip is the indexPath of the subtree whose name is displayed in this cell.
+        let ip: NSIndexPath = controllerIndexPath.indexPathByAddingIndex(indexPath.row);
+        if model.count(ip) > 0 {
+            let tableViewController: TableViewController =
+            TableViewController(model: model, indexPath: ip);
+            navigationController!.pushViewController(tableViewController, animated: true);
+        } else {
+            //ip refers to a tree that is a leaf.  Display its Wikipedia article.
+            let name: NSString = model.name(ip);
             println("\(name)")
-            
-         
-			var string: NSString =
-				name.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!;
-			string = "http://en.m.wikipedia.org/wiki/".stringByAppendingString(string);
-			let url: NSURL? = NSURL(string: string);
-			let data: NSData? = NSData(contentsOfURL: url!);
-			
-			if data == nil {
-				println("could not load URL \(url)");
-			} else {
-				let webView: UIWebView = UIWebView(frame: CGRectZero);
-				webView.scalesPageToFit = true;
-				webView.loadData(data,
-					MIMEType: "text/html",
-					textEncodingName: "NSUTF8StringEncoding",
-					baseURL: url);
-				
-				//Give the web view a generic view controller.
-				let viewController: UIViewController =
-					UIViewController(nibName: nil, bundle: nil);
-				viewController.title = name;
-				viewController.view = webView;
-				navigationController!.pushViewController(viewController, animated: true);
-    
+		
+		//ip is the indexPath of the subtree whose name is displayed in this cell.
+        //Give the web view a generic view controller.
+        let viewController: UIViewController =
+        UIViewController(nibName: nil, bundle: nil);
+        viewController.title = name
+        viewController.view = View(frame: CGRectZero);
+        navigationController!.pushViewController(viewController, animated: true);
 			}
 		}
-	}
+}
+
 
 	/*
 	// Override to support conditional editing of the table view.
@@ -128,7 +122,7 @@ class TableViewController: UITableViewController {
 	}
 	*/
 
-
+    /*
 	// Override to support editing the table view.
 	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 		if editingStyle == .Delete {
@@ -137,8 +131,9 @@ class TableViewController: UITableViewController {
 		} else if editingStyle == .Insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 		}
+
 	}
-	
+	*/
 	/*
 	// Override to support rearranging the table view.
 	override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
@@ -162,5 +157,3 @@ class TableViewController: UITableViewController {
 		// Pass the selected object to the new view controller.
 	}
 	*/
-
-}

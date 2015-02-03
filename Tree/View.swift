@@ -10,21 +10,23 @@ import UIKit
 import GLKit;	//needed for GLKMathDegreesToRadians
 
 class View: UIView {
-    
-    
     let label: UILabel = UILabel();
     let labelQuote: UITextView = UITextView();
-    let imageView: UIImageView;
-    let imageView1: UIImageView;
-    let imageView2: UIImageView;
-    let imageView3: UIImageView;
+    let imageView: UIImageView = UIImageView();
+    let imageView1: UIImageView = UIImageView();
+    let imageView2: UIImageView = UIImageView();
+    let imageView3: UIImageView = UIImageView();
     
     required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder);
+    }
+    override init(frame:CGRect) {
+        super.init(frame:frame);
         self.imageView = UIImageView();
         self.imageView1 = UIImageView();
         self.imageView2 = UIImageView();
         self.imageView3 = UIImageView();
-        super.init(coder: aDecoder);
+
         
         // Initialization code
         backgroundColor = UIColor.blackColor();
